@@ -43,7 +43,6 @@ RobotInterface::Status RobotStatePublisher::RobotInit(){
 	std::string msg(ss.str());
 	GetConsole()->Print(msg);
 
-
     string topicName;
 
     ///- Publish Joint State Message -///
