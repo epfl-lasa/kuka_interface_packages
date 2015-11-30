@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
 <launch>
-	<node name="lwr_main" pkg="lwr_interface" type="lwr_main" output="screen" launch-prefix="xterm -hold -e " args="--config packages/kuka_fri_bridge/KUKAMirror"/>
+	<node name="kuka_fri_bridge" pkg="kuka_fri_bridge" type="kuka_fri_bridge_node" output="screen" launch-prefix="xterm -hold -e "/>
 </launch>
 

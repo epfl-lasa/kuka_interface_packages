@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/guillaume/roscode/catkin_ws2/src/kuka/kuka_interface_packages/kuka_model/build/devel/setup.sh

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "kuka_model")
+set(kuka_model_MAINTAINER "klas <klas@todo.todo>")
+set(kuka_model_DEPRECATED "")
+set(kuka_model_VERSION "0.0.0")
+set(kuka_model_BUILD_DEPENDS "std_tools")
+set(kuka_model_RUN_DEPENDS "std_tools")
+set(kuka_model_BUILDTOOL_DEPENDS "catkin")

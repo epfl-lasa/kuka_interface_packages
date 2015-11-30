@@ -1,0 +1,8 @@
+prefix=/home/guillaume/roscode/catkin_ws2/src/kuka/kuka_interface_packages/kuka_model/build/devel
+
+Name: kuka_model
+Description: Description of kuka_model
+Version: 0.0.0
+Cflags: -I/home/guillaume/roscode/catkin_ws2/src/kuka/kuka_interface_packages/kuka_model/include
+Libs: -L/home/guillaume/roscode/catkin_ws2/src/kuka/kuka_interface_packages/kuka_model/build/devel/lib -lkuka_robot_model
+Requires: 

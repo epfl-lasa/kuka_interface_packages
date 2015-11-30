@@ -40,25 +40,32 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
- <build_depend>mathlib</build_depend>
- <build_depend>std_tools</build_depend>
- <build_depend>robotlib</build_depend>
+ <build_depend>std_tools_fri</build_depend>
  <build_depend>roscpp</build_depend>
  <build_depend>geomtry_msgs</build_depend>
  <build_depend>sensor_msgs</build_depend>
- <build_depend>kuka_robot_model</build_depend>
  <build_depend>motion_generators</build_depend>
  <build_depend>message_generation</build_depend>
 
- <run_depend>mathlib</run_depend>
- <run_depend>std_tools</run_depend>
- <run_depend>robotlib</run_depend>
+ <run_depend>std_tools_fri</run_depend>
  <run_depend>roscpp</run_depend>
  <run_depend>geomtry_msgs</run_depend>
  <run_depend>sensor_msgs</run_depend>
- <run_depend>kuka_robot_model</run_depend>
  <run_depend>motion_generators</run_depend>
  <run_depend>message_runtime</run_depend>
+
+  <build_depend>roscpp</build_depend>
+
+  <build_depend>fri_library_ros</build_depend>
+  <run_depend>fri_library_ros</run_depend>
+
+  <build_depend>roslib</build_depend>
+  <run_depend>roslib</run_depend>
+
+
+  <build_depend>kuka_model</build_depend>
+  <run_depend>kuka_model</run_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

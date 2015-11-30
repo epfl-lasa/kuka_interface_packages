@@ -1,15 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(kuka_fri_bridge)
 
-set(RobotModules RobotStatePublisher RobotStateSubscriber)
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-find_package(catkin REQUIRED mathlib std_tools robotlib kuka_robot_model motion_generators message_generation sensor_msgs geometry_msgs)
+find_package(catkin REQUIRED fri_library_ros kuka_model std_tools_fri motion_generators message_generation sensor_msgs geometry_msgs)
+
+find_package(Armadillo)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
+set(CMAKE_CXX_FLAGS "-O2 -O3 -std=c++11 -Wall")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -86,80 +85,45 @@ catkin_package(
 ## Build ##
 ###########
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
- include_directories(  ${catkin_INCLUDE_DIRS})
 
-## Declare a cpp library
- #add_library(robot_publisher
- #  RobotStatePublisher/src/RobotStatePublisher.cpp
- #)
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-## Declare a cpp executable
-# add_executable(rtk_mirror_node src/rtk_mirror_node.cpp)
 
-## Add cmake target dependencies of the executable/library
-## as an example, message headers may need to be generated before nodes
-# add_dependencies(rtk_mirror_node rtk_mirror_generate_messages_cpp)
+include_directories(include ${catkin_INCLUDE_DIRS} ${INCLUDE_DIR})
 
-## Specify libraries to link a library or executable target against
-# target_link_libraries(robot_publisher
-#   ${catkin_LIBRARIES}
-# )
+
+
+set(H_FILES ${INCLUDE_DIR}/kuka_fri_bridge/kuka_fri_bridge.h
+            ${INCLUDE_DIR}/kuka_fri_bridge/robot_state_publisher.h
+          #  ${INCLUDE_DIR}/kuka_fri_bridge/robot_state_subscriber.h
+          #  ${INCLUDE_DIR}/kuka_fri_bridge/std_tools/Console.h
+
+
+)
+
+set(S_FILES ${SRC_DIR}/kuka_fri_bridge/kuka_fri_bridge.cpp
+            ${SRC_DIR}/kuka_fri_bridge/robot_state_publisher.cpp
+           # ${SRC_DIR}/kuka_fri_bridge/robot_state_subscriber.cpp
+           # ${SRC_DIR}/std_tools/Console.cpp
+)
+
+include_directories(${catkin_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME} ${H_FILES} ${S_FILES} )
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${ARMADILLO_LIBRARIES})
+
+add_executable(${PROJECT_NAME}_node ${SRC_DIR}/kuka_fri_bridge_node.cpp)
+target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${ARMADILLO_LIBRARIES})
+
+
+add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+
+
 
 #add_custom_target(${PROJECT_NAME}_temp COMMAND )
 #add_dependencies(${PROJECT_NAME}_temp ${PROJECT_NAME}_generat_messages_cpp)
-find_package(rtk_pkg_tools)
-include(${rtk_pkg_tools_SOURCE_DIR}/RTKbuild_package.cmake)
-include(${rtk_pkg_tools_SOURCE_DIR}/rtk_create_symlinks.cmake)
+#find_package(rtk_pkg_tools)
+#include(${rtk_pkg_tools_SOURCE_DIR}/RTKbuild_package.cmake)
+#include(${rtk_pkg_tools_SOURCE_DIR}/rtk_create_symlinks.cmake)
  
-#find_package(robot_toolkit)
-#add_custom_target(TARGET LWRMain POST_BUILD COMMAND ln -sf 
-
-#############
-## Install ##
-#############
-
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark executables and/or libraries for installation
-# install(TARGETS rtk_mirror rtk_mirror_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
-
-## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_rtk_mirror.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
